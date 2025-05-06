@@ -1,6 +1,5 @@
 package com.reborn.backend.service;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -37,8 +36,7 @@ public class UserService {
             // Create user
             User newUser = new User(
                     name,
-                    email,
-                    LocalDate.now()
+                    email
             );
             userRepository.save(newUser);
         }
