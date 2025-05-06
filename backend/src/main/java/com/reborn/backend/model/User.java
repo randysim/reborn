@@ -56,6 +56,7 @@ public class User {
         this.createdAt = LocalDateTime.now();
         this.picture = "";
         this.coins = 0L;
+        this.cheatDays = 5L;
     }
     public User(String username, String email, String picture) {
         this.username = username;
@@ -63,6 +64,7 @@ public class User {
         this.picture = picture;
         this.createdAt = LocalDateTime.now();
         this.coins = 0L;
+        this.cheatDays = 5L;
     }
 
     public Long getId() {
