@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.reborn.backend.model.Attendance;
+import com.reborn.backend.model.User;
 import com.reborn.backend.repository.AttendanceRepository;
 
 @Service
@@ -26,7 +27,8 @@ public class AttendanceService {
         return attendanceOptional.get();
     }
 
-    public Attendance takeAttendance(Long userId) {
+    public Attendance takeAttendance(User user) {
+        Long userId = user.getId();
         LocalDate today = LocalDate.now();
         Optional<Attendance> attendanceOptional = attendanceRepository.findByUserIdAndDate(userId, today);
         if (attendanceOptional.isEmpty()) {
