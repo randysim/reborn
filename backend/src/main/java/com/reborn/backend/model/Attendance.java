@@ -1,6 +1,6 @@
 package com.reborn.backend.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,14 +24,14 @@ public class Attendance {
     private User user;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private LocalDate date;
 
     @Column(name = "taken")
     private boolean taken;
 
     public Attendance() {}
 
-    public Attendance(User user, LocalDateTime date, boolean taken) {
+    public Attendance(User user, LocalDate date, boolean taken) {
         this.user = user;
         this.date = date;
         this.taken = taken;
@@ -53,11 +53,11 @@ public class Attendance {
         this.user = user;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
