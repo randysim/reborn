@@ -1,6 +1,6 @@
 package com.reborn.backend.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ public class CheatDay {
     private Long id;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,7 +28,7 @@ public class CheatDay {
 
     public CheatDay() {}
 
-    public CheatDay(LocalDateTime date, User user) {
+    public CheatDay(LocalDate date, User user) {
         this.date = date;
         this.user = user;
     }
@@ -41,11 +41,11 @@ public class CheatDay {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

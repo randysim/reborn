@@ -1,6 +1,6 @@
 package com.reborn.backend.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ public class Journal {
     private Long id;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,7 +34,7 @@ public class Journal {
 
     public Journal() {}
 
-    public Journal(LocalDateTime date, User user, String positives, String negatives) {
+    public Journal(LocalDate date, User user, String positives, String negatives) {
         this.date = date;
         this.user = user;
         this.positives = positives;
@@ -50,11 +50,11 @@ public class Journal {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

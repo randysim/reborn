@@ -1,5 +1,6 @@
 package com.reborn.backend.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -29,6 +30,12 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Column(name = "onboarded")
+    private boolean onboarded;
+
     // Stats
     @Column(name = "strength")
     private Long strength;
@@ -57,6 +64,7 @@ public class User {
         this.picture = "";
         this.coins = 0L;
         this.cheatDays = 5L;
+        this.onboarded = false;
     }
     public User(String username, String email, String picture) {
         this.username = username;
@@ -65,6 +73,7 @@ public class User {
         this.createdAt = LocalDateTime.now();
         this.coins = 0L;
         this.cheatDays = 5L;
+        this.onboarded = false;
     }
 
     public Long getId() {
@@ -138,4 +147,12 @@ public class User {
     public Long getCheatDays() { return cheatDays; }
 
     public void setCheatDays(Long cheatDays) { this.cheatDays = cheatDays; }
+
+    public LocalDate getBirthDate() { return birthDate; }
+
+    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+
+    public boolean isOnboarded() { return onboarded; }
+
+    public void setOnboarded(boolean onboarded) { this.onboarded = onboarded; }
 }
