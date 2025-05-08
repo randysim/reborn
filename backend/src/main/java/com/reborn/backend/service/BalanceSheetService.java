@@ -48,6 +48,10 @@ public class BalanceSheetService {
     public void updateBalanceSheetItem(BalanceSheetItemRequest balanceSheetItemRequest, User user) {
         BalanceSheetItem existingBalanceSheetItem = getBalanceSheetItem(balanceSheetItemRequest.getId());
 
+        if (!existingBalanceSheetItem.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this balance sheet item");
+        }
+
         // offset old amount from wealth
         updateUserWealth(user, existingBalanceSheetItem.getAmount() * -1, existingBalanceSheetItem.getType());
 
@@ -75,6 +79,10 @@ public class BalanceSheetService {
     public void deleteBalanceSheetItems(List<Long> ids, User user) {
         List<BalanceSheetItem> balanceSheetItems = balanceSheetItemRepository.findAllById(ids);
         balanceSheetItems.forEach(item -> {
+            if (!item.getUser().equals(user)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this balance sheet item");
+            }
+
             updateUserWealth(user, item.getAmount() * -1, item.getType());
         });
         balanceSheetItemRepository.deleteAllById(ids);

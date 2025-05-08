@@ -40,11 +40,23 @@ public class BookService {
 
         Book book = bookRepository.findById(bookRequest.getId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+        if (!book.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this book");
+        }
+
         book.setTitle(bookRequest.getTitle());
         bookRepository.save(book);
     }
 
     public void deleteBook(Long id, User user) {
+        Book book = bookRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+        if (!book.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this book");
+        }
+        
         bookRepository.deleteById(id);
     }
 
