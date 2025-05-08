@@ -10,12 +10,6 @@ public class BalanceSheetItemBulkRequest {
     @Valid
     private List<BalanceSheetItemRequest> items;
 
-    public BalanceSheetItemBulkRequest() {}
-
-    public BalanceSheetItemBulkRequest(List<BalanceSheetItemRequest> items) {
-        this.items = items;
-    }
-
     public List<BalanceSheetItemRequest> getItems() {
         return items;
     }

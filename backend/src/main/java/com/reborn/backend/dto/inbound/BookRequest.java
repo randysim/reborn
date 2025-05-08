@@ -8,13 +8,6 @@ public class BookRequest {
     @NotBlank
     private String title;
 
-    public BookRequest() {
-    }
-
-    public BookRequest(String title) {
-        this.title = title;
-    }
-
     public String getTitle() {
         return title;
     }

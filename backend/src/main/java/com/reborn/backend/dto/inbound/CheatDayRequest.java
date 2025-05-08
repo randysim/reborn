@@ -5,10 +5,6 @@ import java.time.LocalDate;
 public class CheatDayRequest {
     private LocalDate date;
 
-    public CheatDayRequest(LocalDate date) {
-        this.date = date;
-    }
-
     public LocalDate getDate() {
         return date;
     }

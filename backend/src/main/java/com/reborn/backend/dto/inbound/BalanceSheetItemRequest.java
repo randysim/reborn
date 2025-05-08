@@ -1,6 +1,7 @@
 package com.reborn.backend.dto.inbound;
 
 import com.reborn.backend.model.BalanceSheetItem.ItemType;
+
 import jakarta.validation.constraints.NotNull;
 
 public class BalanceSheetItemRequest {
@@ -11,14 +12,6 @@ public class BalanceSheetItemRequest {
     
     @NotNull(message = "Amount is required")
     private Long amount;
-
-    public BalanceSheetItemRequest() {}
-
-    public BalanceSheetItemRequest(Long id, ItemType type, Long amount) {
-        this.id = id;
-        this.type = type;
-        this.amount = amount;
-    }
 
     public ItemType getType() {
         return type;
