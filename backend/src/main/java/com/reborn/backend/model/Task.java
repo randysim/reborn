@@ -44,7 +44,7 @@ public class Task {
     private boolean completed;
 
     @Column(name = "recurring")
-    private boolean recurring;
+    private int recurring;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -64,7 +64,7 @@ public class Task {
 
     public Task(
         String description, 
-        boolean recurring,
+        int recurring,
         LocalDateTime dueDate, 
         Difficulty difficulty, 
         Priority priority, 
@@ -153,11 +153,11 @@ public class Task {
         this.completedAt = completedAt;
     }
 
-    public boolean isRecurring() {
+    public int getRecurring() {
         return recurring;
     }
 
-    public void setRecurring(boolean recurring) {
+    public void setRecurring(int recurring) {
         this.recurring = recurring;
     }
 }
