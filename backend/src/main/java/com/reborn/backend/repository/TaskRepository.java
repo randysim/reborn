@@ -14,5 +14,4 @@ import com.reborn.backend.model.User;
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByUser(User user);
     List<Task> findByUserAndCompleted(User user, boolean completed);
-    Optional<Task> findByDateAndUser(LocalDateTime date, User user);
 }
