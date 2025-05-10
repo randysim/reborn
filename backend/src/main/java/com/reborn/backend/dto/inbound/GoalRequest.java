@@ -5,8 +5,6 @@ import com.reborn.backend.model.Goal.Difficulty;
 import jakarta.validation.constraints.NotNull;
 
 public class GoalRequest {
-    private Long id;
-    
     @NotNull
     private String title;
 
@@ -15,10 +13,6 @@ public class GoalRequest {
 
     @NotNull
     private Difficulty difficulty;
-
-    public Long getId() {
-        return id;
-    }
 
     public String getTitle() {
         return title;

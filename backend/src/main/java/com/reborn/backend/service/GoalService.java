@@ -24,12 +24,8 @@ public class GoalService {
         return goalRepository.save(goal);
     }
 
-    public Goal updateGoal(GoalRequest goalRequest, User user) {
-        if (goalRequest.getId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Goal ID is required");
-        }
-
-        Goal goal = goalRepository.findById(goalRequest.getId())
+    public Goal updateGoal(Long id,GoalRequest goalRequest, User user) {
+        Goal goal = goalRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal not found"));
 
         if (!goal.getUser().equals(user)) {
