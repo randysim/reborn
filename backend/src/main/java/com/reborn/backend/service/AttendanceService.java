@@ -3,13 +3,13 @@ package com.reborn.backend.service;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.reborn.backend.model.Attendance;
 import com.reborn.backend.model.User;
 import com.reborn.backend.repository.AttendanceRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AttendanceService {
@@ -19,23 +19,23 @@ public class AttendanceService {
         this.attendanceRepository = attendanceRepository;
     }
 
-    public Attendance getAttendance(Long id) {
-        Optional<Attendance> attendanceOptional = attendanceRepository.findById(id);
+    public Attendance getAttendance(LocalDate date, User user) {
+        Optional<Attendance> attendanceOptional = attendanceRepository.findByDateAndUser(date, user);
         if (attendanceOptional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance not found.");
+            Attendance emptyAttendance = new Attendance(user, date, false);
+            return emptyAttendance;
         }
         return attendanceOptional.get();
     }
 
     public Attendance takeAttendance(User user) {
-        Long userId = user.getId();
         LocalDate today = LocalDate.now();
-        Optional<Attendance> attendanceOptional = attendanceRepository.findByUserIdAndDate(userId, today);
-        if (attendanceOptional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attendance not found for today.");
+
+        if (getAttendance(today, user).isTaken()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attendance already taken for today.");
         }
-        Attendance attendance = attendanceOptional.get();
-        attendance.setTaken(true);
+
+        Attendance attendance = new Attendance(user, today, true);
         return attendanceRepository.save(attendance);
     }
 }
