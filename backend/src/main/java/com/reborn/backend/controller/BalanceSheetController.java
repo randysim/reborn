@@ -16,7 +16,7 @@ import com.reborn.backend.dto.inbound.BalanceSheetDeleteRequest;
 import com.reborn.backend.dto.outbound.SuccessResponse;
 
 @RestController
-@RequestMapping("/balance")
+@RequestMapping("/api/balance")
 public class BalanceSheetController {
     private final BalanceSheetService balanceSheetService;
     private final UserService userService;

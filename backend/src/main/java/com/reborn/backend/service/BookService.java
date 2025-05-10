@@ -20,20 +20,20 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public void readBook(Long id, User user) {
+    public void readBook(Long id, boolean read, User user) {
         Book book = bookRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
-        book.setRead(true);
+        book.setRead(read);
         book.setDateRead(LocalDateTime.now());
         bookRepository.save(book);
     }
 
-    public void createBook(BookRequest bookRequest, User user) {
+    public Book createBook(BookRequest bookRequest, User user) {
         Book book = new Book(bookRequest.getTitle(), user);
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
-    public void updateBook(BookRequest bookRequest, User user) {
+    public Book updateBook(BookRequest bookRequest, User user) {
         if (bookRequest.getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Book ID is required");
         }
@@ -46,7 +46,7 @@ public class BookService {
         }
 
         book.setTitle(bookRequest.getTitle());
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     public void deleteBook(Long id, User user) {
