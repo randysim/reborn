@@ -36,6 +36,9 @@ public class User {
     @Column(name = "onboarded")
     private boolean onboarded;
 
+    @Column(name = "timezone")
+    private String timezone;
+
     // Stats
     @Column(name = "strength")
     private Long strength;
@@ -155,4 +158,8 @@ public class User {
     public boolean isOnboarded() { return onboarded; }
 
     public void setOnboarded(boolean onboarded) { this.onboarded = onboarded; }
+
+    public String getTimezone() { return timezone; }
+
+    public void setTimezone(String timezone) { this.timezone = timezone; }
 }

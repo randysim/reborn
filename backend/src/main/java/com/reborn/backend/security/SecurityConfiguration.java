@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
+import jakarta.servlet.http.HttpServletRequest;
 import com.reborn.backend.service.UserService;
 
 @Configuration
@@ -51,7 +51,15 @@ public class SecurityConfiguration {
                         )
                         .successHandler((request, response, authentication) -> {
                             GoogleOAuth2User googleOAuth2User = (GoogleOAuth2User) authentication.getPrincipal();
-                            userService.processOAuthPostLogin(googleOAuth2User);
+                            
+                            // Get timezone from request headers
+                            String timezone = request.getHeader("X-Timezone");
+                            if (timezone == null || timezone.isEmpty()) {
+                                // Fallback to UTC if no timezone provided
+                                timezone = "UTC";
+                            }
+                            
+                            userService.processOAuthPostLogin(googleOAuth2User, timezone);
                             response.sendRedirect("http://localhost:3000");
                         })
                 )

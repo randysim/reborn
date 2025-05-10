@@ -28,6 +28,10 @@ public class UserService {
     }
 
     public void processOAuthPostLogin(GoogleOAuth2User googleOAuth2User) {
+        processOAuthPostLogin(googleOAuth2User, "UTC");
+    }
+
+    public void processOAuthPostLogin(GoogleOAuth2User googleOAuth2User, String timezone) {
         String name = googleOAuth2User.getName();
         String email = googleOAuth2User.getEmail();
 
@@ -38,7 +42,13 @@ public class UserService {
                     name,
                     email
             );
+            newUser.setTimezone(timezone);
             userRepository.save(newUser);
+        } else {
+            // Update existing user's timezone
+            User existingUser = userOptional.get();
+            existingUser.setTimezone(timezone);
+            userRepository.save(existingUser);
         }
     }
 
