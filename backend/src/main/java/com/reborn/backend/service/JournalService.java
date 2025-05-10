@@ -11,7 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.reborn.backend.dto.inbound.JournalRequest;
 import com.reborn.backend.model.Journal;
 import com.reborn.backend.model.User;
-import com.reborn.backend.repository.JournalDateRequest;
 import com.reborn.backend.repository.JournalRepository;
 
 // journals are created on demand when needed by client
@@ -44,8 +43,8 @@ public class JournalService {
         return journal;
     }
 
-    public Journal getJournalByDate(JournalDateRequest journalDateRequest, User user) {
-        Journal journal = journalRepository.findByDateAndUser(journalDateRequest.getDate(), user)
+    public Journal getJournalByDate(LocalDate date, User user) {
+        Journal journal = journalRepository.findByDateAndUser(date, user)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Journal not found"));
 
         return journal;
@@ -55,8 +54,8 @@ public class JournalService {
         return journalRepository.findByUser(user);
     }
 
-    public Journal updateJournal(JournalRequest journalRequest, User user) {
-        Journal journal = getJournal(journalRequest.getId(), user);
+    public Journal updateJournal(Long id,JournalRequest journalRequest, User user) {
+        Journal journal = getJournal(id, user);
         journal.setPositives(journalRequest.getPositives());
         journal.setNegatives(journalRequest.getNegatives());
         return journalRepository.save(journal);
