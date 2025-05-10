@@ -14,6 +14,7 @@ import com.reborn.backend.dto.inbound.CheatDayRequest;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
+import com.reborn.backend.dto.outbound.SuccessResponse;
 
 @RestController
 @RequestMapping("/api/cheat")
@@ -42,7 +43,9 @@ public class CheatDayController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCheatDay(@PathVariable Long id, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
+    public SuccessResponse deleteCheatDay(@PathVariable Long id, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
         cheatDayService.deleteCheatDay(id, userService.getAuthenticatedUser(googleOAuth2User));
+        
+        return new SuccessResponse(true);
     }
 }

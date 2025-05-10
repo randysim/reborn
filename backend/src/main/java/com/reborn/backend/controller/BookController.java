@@ -13,12 +13,11 @@ import com.reborn.backend.model.Book;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.reborn.backend.dto.inbound.BookReadRequest;
+import com.reborn.backend.dto.outbound.SuccessResponse;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import com.reborn.backend.dto.inbound.BookReadRequest;
 
-@RestController
-@RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
     private final UserService userService;
@@ -39,8 +38,9 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable Long id, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
+    public SuccessResponse deleteBook(@PathVariable Long id, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
         bookService.deleteBook(id, userService.getAuthenticatedUser(googleOAuth2User));
+        return new SuccessResponse(true);
     }
 
     @PutMapping("/{id}/read")
