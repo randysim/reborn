@@ -13,6 +13,7 @@ import com.reborn.backend.model.BalanceSheetItem;
 import com.reborn.backend.model.User;
 import com.reborn.backend.repository.BalanceSheetItemRepository;
 import com.reborn.backend.repository.UserRepository;
+import java.util.stream.Collectors;
 
 @Service
 public class BalanceSheetService {
@@ -27,30 +28,34 @@ public class BalanceSheetService {
         this.userRepository = userRepository;
     }
 
-    public BalanceSheetItem getBalanceSheetItem(Long id) {
+    public BalanceSheetItem getBalanceSheetItem(Long id, User user) {
         Optional<BalanceSheetItem> balanceSheetItemOptional = balanceSheetItemRepository.findById(id);
         if (balanceSheetItemOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Balance sheet item not found.");
         }
-        return balanceSheetItemOptional.get();
+
+        BalanceSheetItem balanceSheetItem = balanceSheetItemOptional.get();
+        if (!balanceSheetItem.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this balance sheet item");
+        }
+
+        return balanceSheetItem;
     }
 
     public List<BalanceSheetItem> getBalanceSheetItems(User user) {
         return balanceSheetItemRepository.findByUser(user);
     }
 
-    public void createBalanceSheetItem(BalanceSheetItemRequest balanceSheetItemRequest, User user) {
+    public BalanceSheetItem createBalanceSheetItem(BalanceSheetItemRequest balanceSheetItemRequest, User user) {
         BalanceSheetItem balanceSheetItem = new BalanceSheetItem(balanceSheetItemRequest.getType(), balanceSheetItemRequest.getAmount(), user);
         updateUserWealth(user, balanceSheetItemRequest.getAmount(), balanceSheetItemRequest.getType());
         balanceSheetItemRepository.save(balanceSheetItem);
+
+        return balanceSheetItem;
     }
 
-    public void updateBalanceSheetItem(BalanceSheetItemRequest balanceSheetItemRequest, User user) {
-        BalanceSheetItem existingBalanceSheetItem = getBalanceSheetItem(balanceSheetItemRequest.getId());
-
-        if (!existingBalanceSheetItem.getUser().equals(user)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this balance sheet item");
-        }
+    public BalanceSheetItem updateBalanceSheetItem(BalanceSheetItemRequest balanceSheetItemRequest, User user) {
+        BalanceSheetItem existingBalanceSheetItem = getBalanceSheetItem(balanceSheetItemRequest.getId(), user);
 
         // offset old amount from wealth
         updateUserWealth(user, existingBalanceSheetItem.getAmount() * -1, existingBalanceSheetItem.getType());
@@ -63,17 +68,18 @@ public class BalanceSheetService {
         updateUserWealth(user, balanceSheetItemRequest.getAmount(), balanceSheetItemRequest.getType());
         
         balanceSheetItemRepository.save(existingBalanceSheetItem);
+
+        return existingBalanceSheetItem;
     }
 
-    public void updateOrCreateBalanceSheetItems(BalanceSheetItemBulkRequest balanceSheetItemRequests, User user) {
-        balanceSheetItemRequests.getItems().stream()
-            .forEach(request -> {
-                if (request.getId() == null) {
-                    createBalanceSheetItem(request, user);
-                } else {
-                    updateBalanceSheetItem(request, user);
-                }
-            });
+    public List<BalanceSheetItem> updateOrCreateBalanceSheetItems(BalanceSheetItemBulkRequest balanceSheetItemRequests, User user) {
+        List<BalanceSheetItem> balanceSheetItems = balanceSheetItemRequests.getItems().stream()
+            .map(request -> request.getId() == null 
+                ? createBalanceSheetItem(request, user)
+                : updateBalanceSheetItem(request, user))
+            .collect(Collectors.toList());
+
+        return balanceSheetItems;
     }
  
     public void deleteBalanceSheetItems(List<Long> ids, User user) {
