@@ -10,13 +10,16 @@ import com.reborn.backend.dto.inbound.FitnessRoutineRequest;
 import com.reborn.backend.model.FitnessRoutine;
 import com.reborn.backend.model.User;
 import com.reborn.backend.repository.FitnessRoutineRepository;
+import com.reborn.backend.repository.UserRepository;
 
 @Service
 public class FitnessRoutineService {
     private final FitnessRoutineRepository fitnessRoutineRepository;
+    private final UserRepository userRepository;
 
-    public FitnessRoutineService(FitnessRoutineRepository fitnessRoutineRepository) {
+    public FitnessRoutineService(FitnessRoutineRepository fitnessRoutineRepository, UserRepository userRepository) {
         this.fitnessRoutineRepository = fitnessRoutineRepository;
+        this.userRepository = userRepository;
     }
 
     public FitnessRoutine createFitnessRoutine(FitnessRoutineRequest fitnessRoutineRequest, User user) {
@@ -68,4 +71,27 @@ public class FitnessRoutineService {
         return fitnessRoutine;
     }
     
+    public void setFitnessRoutine(Long id, int day, User user) {
+        FitnessRoutine fitnessRoutine = fitnessRoutineRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness routine not found"));
+
+        if (!fitnessRoutine.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to set this fitness routine");
+        }
+
+        user.getFitnessSchedule()[day] = id;
+        userRepository.save(user);
+    }
+
+    public void completeFitnessRoutine(Long id, int day, boolean completed, User user) {
+        FitnessRoutine fitnessRoutine = fitnessRoutineRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness routine not found"));
+
+        if (!fitnessRoutine.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to complete this fitness routine");
+        }
+
+        user.getFitnessScheduleCompleted()[day] = completed;
+        userRepository.save(user);
+    }
 }
