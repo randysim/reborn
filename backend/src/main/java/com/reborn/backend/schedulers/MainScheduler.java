@@ -1,4 +1,4 @@
-package com.schedulers;
+package com.reborn.backend.schedulers;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
