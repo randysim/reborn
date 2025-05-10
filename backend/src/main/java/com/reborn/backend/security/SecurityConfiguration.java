@@ -52,12 +52,7 @@ public class SecurityConfiguration {
                         .successHandler((request, response, authentication) -> {
                             GoogleOAuth2User googleOAuth2User = (GoogleOAuth2User) authentication.getPrincipal();
                             
-                            // Get timezone from request headers
-                            String timezone = request.getHeader("X-Timezone");
-                            if (timezone == null || timezone.isEmpty()) {
-                                // Fallback to UTC if no timezone provided
-                                timezone = "UTC";
-                            }
+                            String timezone = "UTC";
                             
                             userService.processOAuthPostLogin(googleOAuth2User, timezone);
                             response.sendRedirect("http://localhost:3000");

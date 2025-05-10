@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.reborn.backend.model.User;
 import com.reborn.backend.repository.UserRepository;
 import com.reborn.backend.security.GoogleOAuth2User;
+import com.reborn.backend.dto.inbound.UserUpdateRequest;
 
 @Service
 public class UserService {
@@ -62,5 +63,17 @@ public class UserService {
         }
 
         return userOptional.get();
+    }
+
+    public void updateUser(UserUpdateRequest userUpdateRequest, User user) {
+        user.setTimezone(userUpdateRequest.getTimezone());
+        user.setUsername(userUpdateRequest.getUsername());
+        user.setBirthDate(userUpdateRequest.getBirthDate());
+        userRepository.save(user);
+    }
+
+    public void onboardUser(UserUpdateRequest userUpdateRequest, User user) {
+        user.setOnboarded(true);
+        updateUser(userUpdateRequest, user);
     }
 }
