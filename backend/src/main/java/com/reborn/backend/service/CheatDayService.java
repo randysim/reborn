@@ -23,7 +23,7 @@ public class CheatDayService {
         this.userRepository = userRepository;
     }
     
-    public void createCheatDay(CheatDayRequest cheatDayRequest, User user) {
+    public CheatDay createCheatDay(CheatDayRequest cheatDayRequest, User user) {
         if (user.getCheatDays() <= 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You have no cheat days left");
         }
@@ -41,6 +41,8 @@ public class CheatDayService {
 
         user.setCheatDays(user.getCheatDays() - 1);
         userRepository.save(user);
+
+        return cheatDay;
     }
 
     public List<CheatDay> getCheatDays(User user) {
