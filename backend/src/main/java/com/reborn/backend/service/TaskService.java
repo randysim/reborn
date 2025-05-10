@@ -52,12 +52,12 @@ public class TaskService {
         return taskRepository.findByUserAndCompleted(user, completed);
     }
 
-    public Task updateTask(TaskRequest taskRequest, User user) {
-        if (taskRequest.getId() == null) {
+    public Task updateTask(Long id,TaskRequest taskRequest, User user) {
+        if (id == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task ID is required");
         }
 
-        Task existingTask = getTask(taskRequest.getId(), user);
+        Task existingTask = getTask(id, user);
 
         if (!existingTask.getUser().equals(user)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this task");
@@ -81,6 +81,10 @@ public class TaskService {
     public Task completeTask(Long id, User user) {
         Task existingTask = getTask(id, user);
 
+        if (existingTask.isCompleted()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task is already completed");
+        }
+
         if (existingTask.getRecurring() > 0) {
             TaskRequest taskRequest = new TaskRequest(
                 existingTask.getDescription(),
@@ -91,9 +95,11 @@ public class TaskService {
             );
 
             createTask(taskRequest, user);
-        } else {
-            existingTask.setCompleted(true);
         }
+
+        // Only allow recurring for the most recent version of that task.
+        existingTask.setRecurring(0);
+        existingTask.setCompleted(true);
 
         return taskRepository.save(existingTask);
     }
@@ -101,12 +107,8 @@ public class TaskService {
     public Task uncompleteTask(Long id, User user) {
         Task existingTask = getTask(id, user);
 
-        if (existingTask.getRecurring() > 0) {
-            Optional<Task> currentTask = taskRepository.findByDateAndUser(existingTask.getDueDate().plusDays(existingTask.getRecurring()), user);
-
-            if (currentTask.isPresent()) {
-                taskRepository.delete(currentTask.get());
-            }
+        if (!existingTask.isCompleted()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task is not completed");
         }
 
         existingTask.setCompleted(false);

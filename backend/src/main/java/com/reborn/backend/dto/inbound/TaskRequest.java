@@ -6,7 +6,6 @@ import com.reborn.backend.model.Task.Difficulty;
 import com.reborn.backend.model.Task.Priority;
 
 public class TaskRequest {
-    private Long id;
     private String description;
     private int recurring;
     private LocalDateTime dueDate;
@@ -21,10 +20,6 @@ public class TaskRequest {
         this.dueDate = dueDate;
         this.difficulty = difficulty;
         this.priority = priority;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getDescription() {
