@@ -12,6 +12,7 @@ import com.reborn.backend.service.UserService;
 import java.time.LocalDate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.reborn.backend.dto.outbound.AttendanceResponse;
 
 @RestController
 @RequestMapping("/api/attendance")
@@ -25,14 +26,18 @@ public class AttendanceController {
     }
 
     @GetMapping
-    public Attendance getAttendance(@RequestParam LocalDate date, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
-        return attendanceService.getAttendance(date, userService.getAuthenticatedUser(googleOAuth2User));
+    public AttendanceResponse getAttendance(@RequestParam LocalDate date, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
+        return new AttendanceResponse(
+            attendanceService.getAttendance(date, userService.getAuthenticatedUser(googleOAuth2User))
+        );
     }
     
     @PostMapping
-    public Attendance takeAttendance(@AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
-        return attendanceService.takeAttendance(
-            userService.getAuthenticatedUser(googleOAuth2User)
+    public AttendanceResponse takeAttendance(@AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
+        return new AttendanceResponse(
+            attendanceService.takeAttendance(
+                userService.getAuthenticatedUser(googleOAuth2User)
+            )
         );
     }
     
