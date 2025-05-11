@@ -42,6 +42,9 @@ public class Goal {
     @Column(name = "difficulty")
     private Difficulty difficulty;
 
+    @Column(name = "completed")
+    private boolean completed;
+
     public Goal() {}
 
     public Goal(String title, String description, User user, Difficulty difficulty) {
@@ -50,6 +53,7 @@ public class Goal {
         this.user = user;
         this.difficulty = difficulty;
         this.createdAt = LocalDateTime.now();
+        this.completed = false;
     }
 
     // Getters and Setters
@@ -99,5 +103,13 @@ public class Goal {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

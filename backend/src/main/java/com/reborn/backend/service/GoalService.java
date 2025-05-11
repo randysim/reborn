@@ -53,4 +53,16 @@ public class GoalService {
     public List<Goal> getGoals(User user) {
         return goalRepository.findByUser(user);
     }
+
+    public void completeGoal(Long id, boolean completed, User user) {
+        Goal goal = goalRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal not found"));
+
+        if (!goal.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to complete this goal");
+        }
+
+        goal.setCompleted(completed);
+        goalRepository.save(goal);
+    }
 }
