@@ -67,6 +67,10 @@ public class User {
         this.picture = "";
         this.coins = 0L;
         this.cheatDays = 5L;
+        this.strength = 0L;
+        this.wealth = 0L;
+        this.intelligence = 0L;
+        this.aura = 0L;
         this.onboarded = false;
     }
     public User(String username, String email, String picture) {
