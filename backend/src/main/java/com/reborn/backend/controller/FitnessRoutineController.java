@@ -68,6 +68,7 @@ public class FitnessRoutineController {
     ) {
         return new FitnessRoutineResponse(
             fitnessRoutineService.updateFitnessRoutine(
+                id,
                 fitnessRoutineRequest, 
                 userService.getAuthenticatedUser(googleOAuth2User)
             )

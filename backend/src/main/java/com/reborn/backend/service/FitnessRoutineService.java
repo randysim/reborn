@@ -42,12 +42,12 @@ public class FitnessRoutineService {
         return fitnessRoutineRepository.findByUser(user);
     }
 
-    public FitnessRoutine updateFitnessRoutine(FitnessRoutineRequest fitnessRoutineRequest, User user) {
-        if (fitnessRoutineRequest.getId() == null) {
+    public FitnessRoutine updateFitnessRoutine(Long id, FitnessRoutineRequest fitnessRoutineRequest, User user) {
+        if (id == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fitness routine ID is required");
         }
 
-        FitnessRoutine fitnessRoutine = fitnessRoutineRepository.findById(fitnessRoutineRequest.getId())
+        FitnessRoutine fitnessRoutine = fitnessRoutineRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness routine not found"));
 
         if (!fitnessRoutine.getUser().equals(user)) {
