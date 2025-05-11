@@ -24,13 +24,11 @@ interface AuthUser {
 
 interface UserContextType {
     signedIn: boolean
-    loading: boolean
     user: AuthUser
 }
 
 export const UserContext = createContext<UserContextType>({
     signedIn: false,
-    loading: true,
     user: {} as AuthUser
 })
 
@@ -58,12 +56,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         getAuthenticatedUser()
     }, [])
 
-    if (signedIn) {
-        console.log(user)
-    }
-
     return (
-        <UserContext.Provider value={{ signedIn, loading, user }}>
+        <UserContext.Provider value={{ signedIn, user }}>
             {
                 loading ? <Loading /> : children
             }
