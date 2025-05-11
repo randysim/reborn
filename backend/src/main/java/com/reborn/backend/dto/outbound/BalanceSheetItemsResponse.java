@@ -5,13 +5,13 @@ import java.util.List;
 import com.reborn.backend.model.BalanceSheetItem;
 
 public class BalanceSheetItemsResponse {
-    private List<BalanceSheetItem> balanceSheetItems;
+    private List<BalanceSheetItem> items;
     
-    public BalanceSheetItemsResponse(List<BalanceSheetItem> balanceSheetItems) {
-        this.balanceSheetItems = balanceSheetItems;
+    public BalanceSheetItemsResponse(List<BalanceSheetItem> items) {
+        this.items = items;
     }
 
-    public List<BalanceSheetItem> getBalanceSheetItems() {
-        return balanceSheetItems;
+    public List<BalanceSheetItem> getItems() {
+        return items;
     }
 }
