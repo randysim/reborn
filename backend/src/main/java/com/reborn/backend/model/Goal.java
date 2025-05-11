@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @Table(name = "goals")
 public class Goal {
     public enum Difficulty {
-        EASY, MEDIUM, HARD, INSANE
+        EASY, NORMAL, HARD, INSANE
     }
 
     @Id

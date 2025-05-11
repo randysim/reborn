@@ -12,6 +12,7 @@ public class TaskResponse {
     private Task.Difficulty difficulty;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
+    private int recurring;
     
     public TaskResponse(Task task) {
         this.id = task.getId();
@@ -21,6 +22,7 @@ public class TaskResponse {
         this.difficulty = task.getDifficulty();
         this.createdAt = task.getCreatedAt();
         this.dueDate = task.getDueDate();
+        this.recurring = task.getRecurring();
     }
     
     public Long getId() {
@@ -49,5 +51,9 @@ public class TaskResponse {
 
     public LocalDateTime getDueDate() {
         return dueDate;
+    }
+
+    public int getRecurring() {
+        return recurring;
     }
 }
