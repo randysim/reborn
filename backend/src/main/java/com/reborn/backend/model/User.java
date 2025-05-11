@@ -64,7 +64,6 @@ public class User {
         this.username = username;
         this.email = email;
         this.createdAt = LocalDateTime.now();
-        this.picture = "";
         this.coins = 0L;
         this.cheatDays = 5L;
         this.strength = 0L;
@@ -72,15 +71,12 @@ public class User {
         this.intelligence = 0L;
         this.aura = 0L;
         this.onboarded = false;
+        this.timezone = "UTC";
     }
+    
     public User(String username, String email, String picture) {
-        this.username = username;
-        this.email = email;
+        this(username, email);
         this.picture = picture;
-        this.createdAt = LocalDateTime.now();
-        this.coins = 0L;
-        this.cheatDays = 5L;
-        this.onboarded = false;
     }
 
     public Long getId() {
