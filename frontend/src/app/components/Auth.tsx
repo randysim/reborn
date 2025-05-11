@@ -6,11 +6,13 @@ import Loading from "./Loading";
 interface UserContextType {
     signedIn: boolean
     user: AuthUser
+    refreshUser: () => void
 }
 
 export const UserContext = createContext<UserContextType>({
     signedIn: false,
-    user: {} as AuthUser
+    user: {} as AuthUser,
+    refreshUser: () => {}
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -18,27 +20,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState({} as AuthUser)
 
-    useEffect(() => {
-        const getAuthenticatedUser = async () => {
-            try {
-                let res = await fetch(`${API_URL}/api/users/me`, { method: "GET", credentials: "include"})
-                if (res.ok) {
-                    let user = await res.json()
-                    setUser(user)
-                    setSignedIn(true)
-                }
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setLoading(false)
+    const refreshUser = async () => {
+        try {
+            let res = await fetch(`${API_URL}/api/users/me`, { method: "GET", credentials: "include"})
+            if (res.ok) {
+                let user = await res.json()
+                setUser(user)
+                setSignedIn(true)
             }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
         }
+    }
 
-        getAuthenticatedUser()
+    useEffect(() => {
+        refreshUser()
     }, [])
 
     return (
-        <UserContext.Provider value={{ signedIn, user }}>
+        <UserContext.Provider value={{ signedIn, user, refreshUser }}>
             {
                 loading ? <Loading /> : children
             }
