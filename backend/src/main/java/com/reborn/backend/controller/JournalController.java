@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import com.reborn.backend.dto.outbound.SuccessResponse;
+import com.reborn.backend.dto.outbound.JournalResponse;
 
 @RestController
 @RequestMapping("/api/journals")
@@ -30,35 +31,41 @@ public class JournalController {
     }
     
     @GetMapping
-    public Journal getJournalByDate(
+    public JournalResponse getJournalByDate(
         @RequestParam("date") String date,
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
-        return journalService.getJournalByDate(
-            LocalDate.parse(date), 
-            userService.getAuthenticatedUser(googleOAuth2User)
+        return new JournalResponse(
+            journalService.getJournalByDate(
+                LocalDate.parse(date), 
+                userService.getAuthenticatedUser(googleOAuth2User)
+            )
         );
     }
 
     @PostMapping
-    public Journal createJournal(
+    public JournalResponse createJournal(
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
-        return journalService.createJournal(
-            userService.getAuthenticatedUser(googleOAuth2User)
+        return new JournalResponse(
+            journalService.createJournal(
+                userService.getAuthenticatedUser(googleOAuth2User)
+            )
         );
     }
 
     @PutMapping("/{id}")
-    public Journal updateJournal(
+    public JournalResponse updateJournal(
         @PathVariable Long id,
         @RequestBody JournalRequest journalRequest,
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
-        return journalService.updateJournal(
-            id,
-            journalRequest,
-            userService.getAuthenticatedUser(googleOAuth2User)
+        return new JournalResponse(
+            journalService.updateJournal(
+                id,
+                journalRequest,
+                userService.getAuthenticatedUser(googleOAuth2User)
+            )
         );
     }
 
