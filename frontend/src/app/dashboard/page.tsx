@@ -1,13 +1,13 @@
 'use client'
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { UserContext } from "../components/Auth"
 import { redirect } from "next/navigation"
 
 export default function Dashboard() {
     const { signedIn, user } = useContext(UserContext)
 
-    if (!signedIn) return redirect("/");
-    if (!user.onboarded) return redirect("/onboard");
+    if (!signedIn) redirect("/");
+    if (!user.onboarded) redirect("/onboard");
 
     return (
         <div>

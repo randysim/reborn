@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 export default function Onboard() {
     const { user } = useContext(UserContext)
 
-    if (user.onboarded) return redirect("/dashboard");
+    if (user.onboarded) redirect("/dashboard");
 
     return (
         <div>

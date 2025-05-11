@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export default function Home() {
   const { signedIn } = useContext(UserContext)
 
-  if (signedIn) return redirect("/dashboard");
+  if (signedIn) redirect("/dashboard");
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
