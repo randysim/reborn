@@ -6,7 +6,6 @@ import com.reborn.backend.model.Journal;
 
 public class JournalResponse {
     private Long id;
-    private String title;
     private LocalDate date;
     private String positives;
     private String negatives;
@@ -20,10 +19,6 @@ public class JournalResponse {
     
     public Long getId() {
         return id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public LocalDate getDate() {
