@@ -1,0 +1,3 @@
+interface SuccessResponse {
+    success: Boolean
+}

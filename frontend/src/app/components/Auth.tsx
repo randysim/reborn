@@ -3,25 +3,6 @@ import { createContext, useEffect, useState } from "react";
 import { API_URL } from "../lib/constants"
 import Loading from "./Loading";
 
-interface AuthUser {
-    id: Number
-    username: String
-    email: String
-    picture: String
-    birthDate?: String
-    createdAt: String
-    onboarded: Boolean
-    timezone: String
-    strength: Number
-    wealth: Number
-    intelligence: Number
-    aura: Number
-    coins: Number
-    cheatDays: Number
-    fitnessSchedule: Number[]
-    fitnessScheduleCompleted: Boolean[]
-}
-
 interface UserContextType {
     signedIn: boolean
     user: AuthUser

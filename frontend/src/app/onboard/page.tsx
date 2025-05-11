@@ -4,10 +4,11 @@ import { useContext } from "react"
 import { redirect } from "next/navigation"
 
 export default function Onboard() {
-    const { user } = useContext(UserContext)
+    const { user, signedIn } = useContext(UserContext)
 
+    if (!signedIn) redirect("/");
     if (user.onboarded) redirect("/dashboard");
-
+    
     return (
         <div>
             <h1>Onboard</h1>
