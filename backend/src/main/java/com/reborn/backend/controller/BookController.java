@@ -17,6 +17,7 @@ import com.reborn.backend.dto.outbound.SuccessResponse;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.reborn.backend.dto.inbound.BookReadRequest;
+import com.reborn.backend.dto.outbound.BookResponse;
 
 public class BookController {
     private final BookService bookService;
@@ -28,13 +29,17 @@ public class BookController {
     }
     
     @PostMapping
-    public Book createBook(@RequestBody BookRequest bookRequest, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
-        return bookService.createBook(bookRequest, userService.getAuthenticatedUser(googleOAuth2User));
+    public BookResponse createBook(@RequestBody BookRequest bookRequest, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
+        return new BookResponse(
+            bookService.createBook(bookRequest, userService.getAuthenticatedUser(googleOAuth2User))
+        );
     }
 
     @PutMapping
-    public Book updateBook(@RequestBody BookRequest bookRequest, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
-        return bookService.updateBook(bookRequest, userService.getAuthenticatedUser(googleOAuth2User));
+    public BookResponse updateBook(@RequestBody BookRequest bookRequest, @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
+        return new BookResponse(
+            bookService.updateBook(bookRequest, userService.getAuthenticatedUser(googleOAuth2User))
+        );
     }
 
     @DeleteMapping("/{id}")
