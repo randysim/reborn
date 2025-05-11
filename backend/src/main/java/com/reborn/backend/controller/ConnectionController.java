@@ -14,7 +14,9 @@ import com.reborn.backend.dto.inbound.ConnectionRequest;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
+import java.util.stream.Collectors;
 import com.reborn.backend.dto.outbound.SuccessResponse;
+import com.reborn.backend.dto.outbound.ConnectionResponse;
 
 @RestController
 @RequestMapping("/api/connections")
@@ -28,13 +30,15 @@ public class ConnectionController {
     }
 
     @PostMapping
-    public Connection createConnection(
+    public ConnectionResponse createConnection(
         @RequestBody ConnectionRequest connectionRequest, 
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
-        return connectionService.createConnection(
-            connectionRequest, 
-            userService.getAuthenticatedUser(googleOAuth2User)
+        return new ConnectionResponse(
+            connectionService.createConnection(
+                connectionRequest, 
+                userService.getAuthenticatedUser(googleOAuth2User)
+            )
         );
     }
 
@@ -49,8 +53,11 @@ public class ConnectionController {
     }
 
     @GetMapping
-    public List<Connection> getConnections(@AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
-        return connectionService.getConnections(userService.getAuthenticatedUser(googleOAuth2User));
+    public List<ConnectionResponse> getConnections(@AuthenticationPrincipal GoogleOAuth2User googleOAuth2User) {
+        return connectionService.getConnections(userService.getAuthenticatedUser(googleOAuth2User))
+            .stream()
+            .map(ConnectionResponse::new)
+            .collect(Collectors.toList());
     }
 
     @PostMapping("/{id}/accept")
