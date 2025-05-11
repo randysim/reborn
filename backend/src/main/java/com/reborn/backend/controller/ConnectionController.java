@@ -6,7 +6,6 @@ import com.reborn.backend.service.ConnectionService;
 import com.reborn.backend.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.reborn.backend.security.GoogleOAuth2User;
-import com.reborn.backend.model.Connection;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

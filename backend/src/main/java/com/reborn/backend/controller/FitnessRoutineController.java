@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reborn.backend.service.FitnessRoutineService;
 import com.reborn.backend.security.GoogleOAuth2User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import com.reborn.backend.model.FitnessRoutine;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.reborn.backend.service.UserService;

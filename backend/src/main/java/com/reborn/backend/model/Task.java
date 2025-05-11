@@ -37,9 +37,6 @@ public class Task {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "completed_at")
-    private LocalDateTime completedAt;
-
     @Column(nullable = false)
     private boolean completed;
 
@@ -143,14 +140,6 @@ public class Task {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
-    }
-
-    public LocalDateTime getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(LocalDateTime completedAt) {
-        this.completedAt = completedAt;
     }
 
     public int getRecurring() {

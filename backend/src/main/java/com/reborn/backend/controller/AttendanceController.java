@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reborn.backend.model.Attendance;
 import com.reborn.backend.service.AttendanceService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.reborn.backend.security.GoogleOAuth2User;
