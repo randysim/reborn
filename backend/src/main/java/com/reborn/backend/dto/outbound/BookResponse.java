@@ -8,12 +8,14 @@ public class BookResponse {
     private Long id;
     private String title;
     private boolean read;
+    private LocalDateTime dateRead;
     private LocalDateTime createdAt;
 
     public BookResponse(Book book) {
         this.id = book.getId();
         this.title = book.getTitle();
         this.read = book.isRead();
+        this.dateRead = book.getDateRead();
         this.createdAt = book.getCreatedAt();
     }
 
@@ -31,5 +33,9 @@ public class BookResponse {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public LocalDateTime getDateRead() {
+        return dateRead;
     }
 }
