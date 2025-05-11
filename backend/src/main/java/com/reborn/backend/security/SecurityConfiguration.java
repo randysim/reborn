@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import jakarta.servlet.http.HttpServletRequest;
+
 import com.reborn.backend.service.UserService;
 
 @Configuration
