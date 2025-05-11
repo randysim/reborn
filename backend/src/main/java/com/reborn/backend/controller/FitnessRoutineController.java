@@ -18,6 +18,8 @@ import com.reborn.backend.dto.outbound.SuccessResponse;
 import org.springframework.web.bind.annotation.PutMapping;
 import com.reborn.backend.dto.inbound.FitnessRoutineCompleteRequest;
 import com.reborn.backend.dto.inbound.FitnessRoutineSetRequest;
+import com.reborn.backend.dto.outbound.FitnessRoutineResponse;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/fitness")
@@ -31,20 +33,25 @@ public class FitnessRoutineController {
     }
 
     @GetMapping
-    public List<FitnessRoutine> getFitnessRoutines(
+    public List<FitnessRoutineResponse> getFitnessRoutines(
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
-        return fitnessRoutineService.getFitnessRoutines(userService.getAuthenticatedUser(googleOAuth2User));
+        return fitnessRoutineService.getFitnessRoutines(userService.getAuthenticatedUser(googleOAuth2User))
+            .stream()
+            .map(FitnessRoutineResponse::new)
+            .collect(Collectors.toList());
     }
 
     @PostMapping
-    public FitnessRoutine createFitnessRoutine(
+    public FitnessRoutineResponse createFitnessRoutine(
         @RequestBody FitnessRoutineRequest fitnessRoutineRequest, 
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
-        return fitnessRoutineService.createFitnessRoutine(
-            fitnessRoutineRequest, 
-            userService.getAuthenticatedUser(googleOAuth2User)
+        return new FitnessRoutineResponse(
+            fitnessRoutineService.createFitnessRoutine(
+                fitnessRoutineRequest, 
+                userService.getAuthenticatedUser(googleOAuth2User)
+            )
         );
     }
 
@@ -55,14 +62,16 @@ public class FitnessRoutineController {
     }
     
     @PutMapping("/{id}")
-    public FitnessRoutine updateFitnessRoutine(
+    public FitnessRoutineResponse updateFitnessRoutine(
         @PathVariable Long id, 
         @RequestBody FitnessRoutineRequest fitnessRoutineRequest, 
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
-        return fitnessRoutineService.updateFitnessRoutine(
-            fitnessRoutineRequest, 
-            userService.getAuthenticatedUser(googleOAuth2User)
+        return new FitnessRoutineResponse(
+            fitnessRoutineService.updateFitnessRoutine(
+                fitnessRoutineRequest, 
+                userService.getAuthenticatedUser(googleOAuth2User)
+            )
         );
     }
 
