@@ -1,5 +1,6 @@
 package com.reborn.backend.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +64,7 @@ public class BalanceSheetService {
         existingBalanceSheetItem.setType(balanceSheetItemRequest.getType());
         existingBalanceSheetItem.setAmount(balanceSheetItemRequest.getAmount());
         existingBalanceSheetItem.setUser(user);
+        existingBalanceSheetItem.setUpdatedAt(LocalDateTime.now());
 
         // add new amount to wealth
         updateUserWealth(user, balanceSheetItemRequest.getAmount(), balanceSheetItemRequest.getType());
