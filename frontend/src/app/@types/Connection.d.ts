@@ -1,9 +1,9 @@
 interface Connection {
-    id: Number
+    id: number
     user1: User
     user2: User
 }
 
 interface ConnectionRequest {
-    recipientId: Number
+    recipientId: number
 }

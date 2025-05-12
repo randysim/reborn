@@ -1,8 +1,8 @@
 interface CheatDay {
-    id: Number
-    date: String
+    id: number
+    date: string
 }
 
 interface CheatDayRequest {
-    date: String
+    date: string
 }

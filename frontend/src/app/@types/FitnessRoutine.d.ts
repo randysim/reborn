@@ -1,19 +1,19 @@
 interface FitnessRoutine {
-    id: String
-    title: String
-    description: String
+    id: number
+    title: string
+    description: string
 }
 
 interface FitnessRoutineRequest {
-    title: String
-    description: String
+    title: string
+    description: string
 }
 
 interface FitnessRoutineCompleteRequest {
-    day: Number
-    completed: Boolean
+    day: number
+    completed: boolean
 }
 
 interface FitnessRoutineSetRequest {
-    day: Number
+    day: number
 }

@@ -1,16 +1,16 @@
 type GoalDifficulty = "EASY" | "NORMAL" | "HARD" | "INSANE"
 
 interface Goal {
-    id: Number
-    title: String
-    description: String
-    completed: Boolean
-    createdAt: String
+    id: number
+    title: string
+    description: string
+    completed: boolean
+    createdAt: string
     difficulty: GoalDifficulty
 }
 
 interface GoalRequest {
-    title: String
-    description: String
+    title: string
+    description: string
     difficulty: GoalDifficulty
 }

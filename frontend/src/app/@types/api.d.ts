@@ -1,3 +1,3 @@
 interface SuccessResponse {
-    success: Boolean
+    success: boolean
 }

@@ -1,16 +1,16 @@
 interface BookReadRequest {
-    read: Boolean
+    read: boolean
 }
 
 interface BookRequest {
-    id: Number
-    title: String
+    id: number
+    title: string
 }
 
 interface Book {
-    id: Number
-    title: String
-    read: Boolean
-    dateRead: String
-    createdAt: String
+    id: number
+    title: string
+    read: boolean
+    dateRead: string
+    createdAt: string
 }

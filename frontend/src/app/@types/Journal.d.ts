@@ -1,11 +1,11 @@
 interface JournalRequest {
-    positives: String
-    negatives: String
+    positives: string
+    negatives: string
 }
 
 interface Journal {
-    id: Number
-    date: String
-    positives: String
-    negatives: String
+    id: number
+    date: string
+    positives: string
+    negatives: string
 }

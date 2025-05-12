@@ -1,4 +1,4 @@
 interface Attendance {
-    date: String
-    taken: Boolean
+    date: string
+    taken: boolean
 }

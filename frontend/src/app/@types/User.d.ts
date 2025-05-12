@@ -1,24 +1,30 @@
 interface AuthUser {
-    id: Number
-    username: String
-    email: String
-    picture: String
-    birthDate?: String
-    createdAt: String
-    onboarded: Boolean
-    timezone: String
-    strength: Number
-    wealth: Number
-    intelligence: Number
-    aura: Number
-    coins: Number
-    cheatDays: Number
-    fitnessSchedule: Number[]
-    fitnessScheduleCompleted: Boolean[]
+    id: number
+    username: string
+    email: string
+    picture: string
+    birthDate?: string
+    createdAt: string
+    onboarded: boolean
+    timezone: string
+    strength: number
+    wealth: number
+    intelligence: number
+    aura: number
+    coins: number
+    cheatDays: number
+    fitnessSchedule: number[]
+    fitnessScheduleCompleted: boolean[]
 }
 
 interface User {
-    id: Number
-    username: String
-    picture: String
+    id: number
+    username: string
+    picture: string
+}
+
+interface UserUpdateRequest {
+    timezone: string
+    username: string
+    birthDate: string
 }

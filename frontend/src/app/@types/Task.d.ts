@@ -2,20 +2,20 @@ type TaskDifficulty = "EASY" | "NORMAL" | "HARD"
 type TaskPriority = "LOW" | "MEDIUM" | "HIGH"
 
 interface TaskRequest {
-    description: String
-    recurring: Number
-    dueDate: String
+    description: string
+    recurring: number
+    dueDate: string
     difficulty: TaskDifficulty
     priority: TaskPriority
 }
 
 interface Task {
-    id: Number
-    description: String
-    completed: Boolean
+    id: number
+    description: string
+    completed: boolean
     priority: TaskPriority
     difficulty: TaskDifficulty
-    dueDate: String
-    createdAt: String
-    recurring: Number
+    dueDate: string
+    createdAt: string
+    recurring: number
 }

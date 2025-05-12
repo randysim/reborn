@@ -1,13 +1,13 @@
 type ItemType = "ASSET" | "LIABILITY"
 
 interface BalanceSheetItemRequest {
-    id?: Number
+    id?: number
     type: ItemType
-    amount: Number
+    amount: number
 }
 
 interface BalanceSheetDeleteRequest {
-    ids: Number[]
+    ids: number[]
 }
 
 interface BalanceSheetItemBulkRequest {
@@ -19,9 +19,9 @@ interface BalanceSheetItemsResponse {
 }
 
 interface BalanceSheetItem {
-    id?: Number
+    id?: number
     type: ItemType
-    amount: Number
-    createdAt: String
-    updatedAt: String
+    amount: number
+    createdAt: string
+    updatedAt: string
 }
