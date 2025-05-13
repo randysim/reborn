@@ -36,6 +36,14 @@ public class FitnessRoutineService {
         }
 
         fitnessRoutineRepository.delete(fitnessRoutine);
+
+        // Delete id from user's fitness schedule if it exists
+        for (int i = 0; i < user.getFitnessSchedule().length; i++) {
+            if (user.getFitnessSchedule()[i] == id) {
+                user.getFitnessSchedule()[i] = null;
+            }
+        }
+        userRepository.save(user);
     }
 
     public List<FitnessRoutine> getFitnessRoutines(User user) {
