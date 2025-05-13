@@ -27,7 +27,7 @@ export default function SignIn() {
         Your heart will stop in <span className="text-red-500">0.02 seconds</span> if you choose not to accept.<br></br>Will you accept?
       </p>
       <button type="submit" className="border-2 border-white p-2 px-8 cursor-pointer hover:bg-white hover:text-black [box-shadow:0_0_20px_#3b82f6] [text-shadow:0_0_10px_#3b82f6] font-bold">
-        [YES] Google Sign In
+        YES
       </button>
     </form>
   );

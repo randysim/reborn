@@ -1,6 +1,6 @@
 'use client'
 import { UserContext } from "../components/Auth"
-import { useContext, useState, useEffect } from "react"
+import { useContext, useState } from "react"
 import { redirect } from "next/navigation"
 import { API_URL } from "../lib/constants"
 import UsernameStep from "./components/UsernameStep"
