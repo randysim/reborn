@@ -75,14 +75,12 @@ public class FitnessRoutineController {
         );
     }
 
-    @PostMapping("/{id}/complete")
+    @PostMapping("/complete")
     public SuccessResponse completeFitnessRoutine(
-        @PathVariable Long id, 
         @RequestBody FitnessRoutineCompleteRequest fitnessRoutineCompleteRequest,
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
         fitnessRoutineService.completeFitnessRoutine(
-            id, 
             fitnessRoutineCompleteRequest.getDay(), 
             fitnessRoutineCompleteRequest.isCompleted(), 
             userService.getAuthenticatedUser(googleOAuth2User)
@@ -90,14 +88,13 @@ public class FitnessRoutineController {
         return new SuccessResponse(true);
     }
 
-    @PostMapping("/{id}/set")
+    @PostMapping("/set")
     public SuccessResponse setFitnessRoutine(
-        @PathVariable Long id, 
         @RequestBody FitnessRoutineSetRequest fitnessRoutineSetRequest,
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
         fitnessRoutineService.setFitnessRoutine(
-            id, 
+            fitnessRoutineSetRequest.getId(), 
             fitnessRoutineSetRequest.getDay(), 
             userService.getAuthenticatedUser(googleOAuth2User)
         );

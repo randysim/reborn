@@ -83,7 +83,17 @@ public class FitnessRoutineService {
         userRepository.save(user);
     }
 
-    public void completeFitnessRoutine(Long id, int day, boolean completed, User user) {
+    public void completeFitnessRoutine(int day, boolean completed, User user) {
+        if (day < 0 || day > 6) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid day");
+        }
+
+        Long id = user.getFitnessSchedule()[day];
+
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fitness routine not set for this day");
+        }
+
         FitnessRoutine fitnessRoutine = fitnessRoutineRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness routine not found"));
 
