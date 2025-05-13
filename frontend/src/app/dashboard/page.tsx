@@ -1,18 +1,10 @@
 'use client'
-import { useContext } from "react"
-import { UserContext } from "../components/Auth"
-import { redirect } from "next/navigation"
 import TaskList from "./components/TaskList"
 import ProfileCard from "./components/ProfileCard"
 import DeathTracker from "./components/DeathTracker"
 import FitnessTracker from "./components/FitnessTracker"
 
 export default function Dashboard() {
-    const { signedIn, user } = useContext(UserContext)
-
-    if (!signedIn) redirect("/");
-    if (!user.onboarded) redirect("/onboard");
-
     return (
         <div className="w-full h-screen">
             <div className="w-full h-full flex flex-col md:flex-row">

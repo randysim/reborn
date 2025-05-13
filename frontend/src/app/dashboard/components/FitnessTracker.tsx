@@ -156,7 +156,7 @@ export default function FitnessTracker() {
     };
 
     return (
-        <div className="p-6 bg-white/5 backdrop-blur-sm border border-white rounded-lg h-full">
+        <div className="mb-16 p-6 bg-white/5 backdrop-blur-sm border border-white rounded-lg h-full">
             <h1 className="text-2xl font-bold mb-4 text-white">Fitness Schedule</h1>
             <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
                 {DAYS.map((day, index) => (

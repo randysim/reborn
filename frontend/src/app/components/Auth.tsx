@@ -7,12 +7,14 @@ interface UserContextType {
     signedIn: boolean
     user: AuthUser
     refreshUser: () => void
+    logout: () => void
 }
 
 export const UserContext = createContext<UserContextType>({
     signedIn: false,
     user: {} as AuthUser,
-    refreshUser: () => {}
+    refreshUser: () => {},
+    logout: () => {}
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -35,12 +37,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     }
 
+    const logout = async () => {
+        window.location.href = `${API_URL}/logout`
+    }
+
     useEffect(() => {
         refreshUser()
     }, [])
 
     return (
-        <UserContext.Provider value={{ signedIn, user, refreshUser }}>
+        <UserContext.Provider value={{ signedIn, user, refreshUser, logout }}>
             {
                 loading ? <Loading /> : children
             }
