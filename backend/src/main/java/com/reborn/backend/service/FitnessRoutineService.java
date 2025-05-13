@@ -80,11 +80,13 @@ public class FitnessRoutineService {
     }
     
     public void setFitnessRoutine(Long id, int day, User user) {
-        FitnessRoutine fitnessRoutine = fitnessRoutineRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness routine not found"));
+        if (id != null) {
+            FitnessRoutine fitnessRoutine = fitnessRoutineRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness routine not found"));
 
-        if (!fitnessRoutine.getUser().equals(user)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to set this fitness routine");
+            if (!fitnessRoutine.getUser().equals(user)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to set this fitness routine");
+            }
         }
 
         user.getFitnessSchedule()[day] = id;

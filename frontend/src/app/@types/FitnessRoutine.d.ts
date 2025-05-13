@@ -15,5 +15,6 @@ interface FitnessRoutineCompleteRequest {
 }
 
 interface FitnessRoutineSetRequest {
+    id: number
     day: number
 }

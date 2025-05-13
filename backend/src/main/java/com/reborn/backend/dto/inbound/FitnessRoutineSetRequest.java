@@ -6,7 +6,6 @@ public class FitnessRoutineSetRequest {
     @NotNull
     private int day;
 
-    @NotNull
     private Long id;
 
     public int getDay() {

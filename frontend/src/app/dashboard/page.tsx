@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import TaskList from "./components/TaskList"
 import ProfileCard from "./components/ProfileCard"
 import DeathTracker from "./components/DeathTracker"
+import FitnessTracker from "./components/FitnessTracker"
 
 export default function Dashboard() {
     const { signedIn, user } = useContext(UserContext)
@@ -25,8 +26,8 @@ export default function Dashboard() {
                             <DeathTracker />
                         </div>
                     </div>
-                    <div className="w-full h-[300px]">
-                        Fitness Routine
+                    <div className="w-full h-auto md:h-[400px] p-4 md:p-10">
+                        <FitnessTracker />
                     </div>
                 </div>
                 {/* TASK LIST CONTAINER */}
