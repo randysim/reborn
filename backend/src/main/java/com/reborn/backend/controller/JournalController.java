@@ -44,10 +44,12 @@ public class JournalController {
 
     @PostMapping
     public JournalResponse createJournal(
+        @RequestParam("date") String date,
         @AuthenticationPrincipal GoogleOAuth2User googleOAuth2User
     ) {
         return new JournalResponse(
             journalService.createJournal(
+                LocalDate.parse(date),
                 userService.getAuthenticatedUser(googleOAuth2User)
             )
         );

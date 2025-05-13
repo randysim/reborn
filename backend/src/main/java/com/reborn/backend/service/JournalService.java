@@ -22,13 +22,13 @@ public class JournalService {
         this.journalRepository = journalRepository;
     }
     
-    public Journal createJournal(User user) {
-        Optional<Journal> journalOptional = journalRepository.findByDateAndUser(LocalDate.now(), user);
+    public Journal createJournal(LocalDate date, User user) {
+        Optional<Journal> journalOptional = journalRepository.findByDateAndUser(date, user);
         if (journalOptional.isPresent()) {
-            return journalOptional.get();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Journal already exists for today");
         }
 
-        Journal journal = new Journal(LocalDate.now(), user, "", "");
+        Journal journal = new Journal(date, user, "", "");
         return journalRepository.save(journal);
     }
 

@@ -12,7 +12,8 @@ import {
     Target,
     Menu,
     X,
-    LogOut
+    LogOut,
+    Users
 } from "lucide-react"
 
 export default function DashboardLayout({
@@ -33,6 +34,7 @@ export default function DashboardLayout({
         { href: "/dashboard/net-worth", label: "Net Worth", icon: DollarSign },
         { href: "/dashboard/goals", label: "Goals", icon: Target },
         { href: "/dashboard/books", label: "Books", icon: BookOpen },
+        { href: "/dashboard/connections", label: "Connections", icon: Users }
     ]
 
     return (
