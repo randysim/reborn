@@ -4,6 +4,7 @@ import { UserContext } from "../components/Auth"
 import { redirect } from "next/navigation"
 import TaskList from "./components/TaskList"
 import ProfileCard from "./components/ProfileCard"
+import DeathTracker from "./components/DeathTracker"
 
 export default function Dashboard() {
     const { signedIn, user } = useContext(UserContext)
@@ -13,20 +14,15 @@ export default function Dashboard() {
 
     return (
         <div className="w-full h-screen">
-            <div className="w-full h-full flex">
+            <div className="w-full h-full flex flex-col md:flex-row">
                 {/* REST */}
-                <div className="w-[75%] h-full">
-                    <div className="w-full h-[400px] flex">
-                        <div className="w-[35%] h-full p-10">
+                <div className="w-full md:w-[75%] h-full">
+                    <div className="w-full h-auto flex flex-col md:flex-row">
+                        <div className="w-full md:w-[35%] h-full p-4 md:p-10">
                             <ProfileCard />
                         </div>
-                        <div className="w-[65%] h-full p-10 flex flex-col">
-                            <div className="w-full h-[75%]">
-                                DEATH
-                            </div>
-                            <div className="w-full h-[25%]">
-                                Time Left
-                            </div>
+                        <div className="w-full md:w-[65%] h-full p-4 md:p-10 flex flex-col">
+                            <DeathTracker />
                         </div>
                     </div>
                     <div className="w-full h-[300px]">
@@ -34,7 +30,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 {/* TASK LIST CONTAINER */}
-                <div className="w-[25%] h-full">
+                <div className="w-full md:w-[25%] h-full">
                     <TaskList />
                 </div>
             </div>

@@ -5,7 +5,7 @@ export default function ProfileCard() {
     const { user } = useContext(UserContext)
     
     return (
-        <div className="bg-white/5 backdrop-blur-sm border border-white p-4 rounded-lg h-[300px] overflow-y-auto">
+        <div className="bg-white/5 backdrop-blur-sm border border-white p-4 rounded-lg h-[312px] overflow-y-auto">
             <div className="flex flex-col gap-3">
                 {/* Personal Information Section */}
                 <div>
