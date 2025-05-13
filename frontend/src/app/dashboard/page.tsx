@@ -18,7 +18,7 @@ export default function Dashboard() {
                     <h1>REST</h1>
                 </div>
                 {/* TASK LIST CONTAINER */}
-                <div className="w-[25%] h-full border-l border-gray-200 pl-[4px]">
+                <div className="w-[25%] h-full">
                     <TaskList />
                 </div>
             </div>

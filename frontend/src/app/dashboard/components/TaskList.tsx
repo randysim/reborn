@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { API_URL } from "@/app/lib/constants"
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline"
+import { PencilIcon, TrashIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
 
 interface TaskDialogProps {
     task?: Task
@@ -54,7 +54,7 @@ function TaskDialog({ task, open, onClose, onSubmit }: TaskDialogProps) {
             className="fixed inset-0 flex items-center justify-center bg-black/50"
             onClick={handleBackdropClick}
         >
-            <div className="bg-gray-900 p-6 rounded-lg w-[500px] border border-gray-700 shadow-xl">
+            <div className="bg-gray-900 p-4 md:p-6 rounded-lg w-[95%] md:w-[500px] border border-gray-700 shadow-xl mx-4">
                 <h1 className="text-2xl font-bold mb-4">{task ? "Edit Task" : "Create Task"}</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -213,10 +213,65 @@ function TaskCard({ task, onToggleComplete, onEdit, onDelete, isCompleted = fals
     )
 }
 
+function MobileTaskDrawer({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: React.ReactNode }) {
+    const [startY, setStartY] = useState(0);
+    const [currentY, setCurrentY] = useState(0);
+    const drawerRef = useRef<HTMLDivElement>(null);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setStartY(e.touches[0].clientY);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        const deltaY = e.touches[0].clientY - startY;
+        if (deltaY > 0) { // Only allow dragging down
+            setCurrentY(deltaY);
+        }
+    };
+
+    const handleTouchEnd = () => {
+        if (currentY > 100) { // If dragged down more than 100px, close the drawer
+            onClose();
+        }
+        setCurrentY(0);
+    };
+
+    return (
+        <div 
+            className={`fixed inset-0 bg-black/50 transition-opacity duration-300 md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            onClick={onClose}
+        >
+            <div 
+                ref={drawerRef}
+                className={`fixed bottom-0 left-0 right-0 bg-gray-900 rounded-t-2xl transition-transform duration-300 transform ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
+                style={{ 
+                    maxHeight: '90vh',
+                    transform: `translateY(${currentY}px)`
+                }}
+                onClick={(e) => e.stopPropagation()}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
+                <div className="flex justify-center p-4">
+                    <div 
+                        className="w-12 h-1 bg-gray-700 rounded-full cursor-grab active:cursor-grabbing"
+                        onClick={onClose}
+                    />
+                </div>
+                <div className="overflow-y-auto px-4 pb-8" style={{ maxHeight: 'calc(90vh - 40px)' }}>
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function TaskList() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedTask, setSelectedTask] = useState<Task | undefined>();
+    const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
     const fetchTasks = async () => {
         const res = await fetch(`${API_URL}/api/tasks`, { method: "GET", credentials: "include" });
@@ -314,17 +369,8 @@ export default function TaskList() {
         .filter((task) => !task.completed)
         .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime());
 
-    return (
-        <div className="w-full h-full overflow-y-scroll pb-[32px]">
-            <h1 className="text-4xl text-center mt-[32px] mb-[16px]">Tasks</h1>
-            <div className="flex justify-center mt-[32px] mb-[16px]">
-                <button 
-                    onClick={openCreateDialog}
-                    className="border-2 border-white p-2 px-8 cursor-pointer hover:bg-white hover:text-black font-bold"
-                >
-                    Create
-                </button>
-            </div>
+    const taskListContent = (
+        <>
             <div className="flex flex-col gap-4 px-4">
                 {toDoTasks.length > 0 ? (
                     toDoTasks.map((task) => (
@@ -359,12 +405,57 @@ export default function TaskList() {
                     <h1 className="text-2xl text-center mt-[32px] mb-[16px] text-red-500">No completed tasks</h1>
                 )}
             </div>
+        </>
+    );
+
+    return (
+        <>
+            {/* Mobile View */}
+            <div className="md:hidden">
+                <button
+                    onClick={() => setIsMobileDrawerOpen(true)}
+                    className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 p-4 flex items-center justify-center gap-2"
+                >
+                    <span>View Tasks</span>
+                    <ChevronUpIcon className="w-5 h-5" />
+                </button>
+                <MobileTaskDrawer 
+                    isOpen={isMobileDrawerOpen} 
+                    onClose={() => setIsMobileDrawerOpen(false)}
+                >
+                    <h1 className="text-4xl text-center mt-[32px] mb-[16px]">Tasks</h1>
+                    <div className="flex justify-center mt-[32px] mb-[16px]">
+                        <button 
+                            onClick={openCreateDialog}
+                            className="border-2 border-white p-2 px-8 cursor-pointer hover:bg-white hover:text-black font-bold"
+                        >
+                            Create
+                        </button>
+                    </div>
+                    {taskListContent}
+                </MobileTaskDrawer>
+            </div>
+
+            {/* Desktop View */}
+            <div className="hidden md:block w-full h-full overflow-y-scroll pb-[32px]">
+                <h1 className="text-4xl text-center mt-[32px] mb-[16px]">Tasks</h1>
+                <div className="flex justify-center mt-[32px] mb-[16px]">
+                    <button 
+                        onClick={openCreateDialog}
+                        className="border-2 border-white p-2 px-8 cursor-pointer hover:bg-white hover:text-black font-bold"
+                    >
+                        Create
+                    </button>
+                </div>
+                {taskListContent}
+            </div>
+
             <TaskDialog
                 task={selectedTask}
                 open={dialogOpen}
                 onClose={() => setDialogOpen(false)}
                 onSubmit={handleDialogSubmit}
             />
-        </div>
-    )
+        </>
+    );
 }
