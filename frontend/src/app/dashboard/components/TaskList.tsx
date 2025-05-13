@@ -367,7 +367,7 @@ export default function TaskList() {
         .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime());
     const toDoTasks = tasks
         .filter((task) => !task.completed)
-        .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime());
+        .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
 
     const taskListContent = (
         <>
