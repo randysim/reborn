@@ -7,7 +7,6 @@ import { useState } from "react"
 import { 
     LayoutDashboard, 
     BookOpen, 
-    Calendar, 
     DollarSign, 
     Target,
     Menu,
@@ -30,7 +29,6 @@ export default function DashboardLayout({
     const menuItems = [
         { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
         { href: "/dashboard/journal", label: "Journal", icon: BookOpen },
-        { href: "/dashboard/calendar", label: "Calendar", icon: Calendar },
         { href: "/dashboard/net-worth", label: "Net Worth", icon: DollarSign },
         { href: "/dashboard/goals", label: "Goals", icon: Target },
         { href: "/dashboard/books", label: "Books", icon: BookOpen },
