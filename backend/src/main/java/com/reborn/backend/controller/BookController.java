@@ -2,6 +2,8 @@ package com.reborn.backend.controller;
 
 import com.reborn.backend.service.BookService;
 import com.reborn.backend.service.UserService;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.reborn.backend.dto.inbound.BookRequest;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.reborn.backend.dto.inbound.BookReadRequest;
 import com.reborn.backend.dto.outbound.BookResponse;
 
+@RestController
+@RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
     private final UserService userService;
