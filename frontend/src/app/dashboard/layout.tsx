@@ -15,11 +15,13 @@ import {
     Users
 } from "lucide-react"
 
+interface DashboardLayoutProps {
+    children: React.ReactNode
+}
+
 export default function DashboardLayout({
     children,
-}: {
-    children: React.ReactNode
-}) {
+}: DashboardLayoutProps) {
     const { signedIn, user, logout } = useContext(UserContext)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 

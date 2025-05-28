@@ -21,7 +21,7 @@ export default function TimezoneStep({ timezone, error, onTimezoneSelect }: Time
             tz.toLowerCase().replace(/\s+/g, '_').includes(searchTerm)
         )
         setFilteredTimezones(filtered)
-    }, [timezoneSearch])
+    }, [timezoneSearch, timezones])
 
     const handleTimezoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value

@@ -80,7 +80,7 @@ export default function FitnessTracker() {
         return () => {
             window.removeEventListener('workoutUpdated', handleWorkoutUpdate);
         };
-    }, []);
+    }, [fetchRoutines]);
 
     const getWorkoutTitle = (id: number) => {
         const routine = routines.find(r => r.id === id);
