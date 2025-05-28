@@ -11,10 +11,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.reborn.backend.config.AppProperties;
 import com.reborn.backend.service.UserService;
 
 @Configuration
 public class SecurityConfiguration {
+    @Autowired
+    private AppProperties appProperties;
+
     @Autowired
     private GoogleOAuth2UserService googleOAuth2UserService;
 
@@ -27,7 +31,7 @@ public class SecurityConfiguration {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin(appProperties.getFrontendUrl());
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
@@ -55,13 +59,13 @@ public class SecurityConfiguration {
                             String timezone = "UTC";
                             
                             userService.processOAuthPostLogin(googleOAuth2User, timezone);
-                            response.sendRedirect("http://localhost:3000");
+                            response.sendRedirect(appProperties.getFrontendUrl());
                         })
                 )
                 .logout(logout ->
                         logout
                                 .logoutUrl("/logout")
-                                .logoutSuccessUrl("http://localhost:3000")
+                                .logoutSuccessUrl(appProperties.getFrontendUrl())
                 );
 
         return http.build();
