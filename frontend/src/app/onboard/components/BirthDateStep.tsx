@@ -2,11 +2,10 @@
 
 interface BirthDateStepProps {
     birthDate: string
-    error: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function BirthDateStep({ birthDate, error, onChange }: BirthDateStepProps) {
+export default function BirthDateStep({ birthDate, onChange }: BirthDateStepProps) {
     return (
         <div className="space-y-4">
             <div>

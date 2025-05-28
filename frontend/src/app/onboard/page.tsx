@@ -19,8 +19,7 @@ export default function Onboard() {
 
     const [errors, setErrors] = useState({
         username: '',
-        timezone: '',
-        birthDate: ''
+        timezone: ''
     })
 
     // Get all timezones
@@ -168,7 +167,6 @@ export default function Onboard() {
                     {step === 3 && (
                         <BirthDateStep
                             birthDate={formData.birthDate}
-                            error={errors.birthDate}
                             onChange={handleInputChange}
                         />
                     )}

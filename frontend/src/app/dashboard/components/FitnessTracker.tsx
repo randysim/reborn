@@ -20,7 +20,6 @@ export default function FitnessTracker() {
     const [isDescriptionDialogOpen, setIsDescriptionDialogOpen] = useState(false);
     const [selectedRoutine, setSelectedRoutine] = useState<FitnessRoutine | null>(null);
     const [routines, setRoutines] = useState<FitnessRoutine[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
 
     const fetchRoutines = async () => {
         try {
@@ -36,8 +35,6 @@ export default function FitnessTracker() {
             }
         } catch (error) {
             console.error('Error fetching routines:', error);
-        } finally {
-            setIsLoading(false);
         }
     };
 

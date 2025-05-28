@@ -24,9 +24,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const refreshUser = async () => {
         try {
-            let res = await fetch(`${API_URL}/api/users/me`, { method: "GET", credentials: "include"})
+            const res = await fetch(`${API_URL}/api/users/me`, { method: "GET", credentials: "include"})
             if (res.ok) {
-                let user = await res.json()
+                const user = await res.json()
                 setUser(user)
                 setSignedIn(true)
             }

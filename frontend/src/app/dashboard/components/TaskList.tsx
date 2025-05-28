@@ -277,8 +277,8 @@ export default function TaskList() {
         const res = await fetch(`${API_URL}/api/tasks`, { method: "GET", credentials: "include" });
         
         if (res.ok) {
-            let tasks = await res.json();
-            setTasks(tasks);
+            const tsks = await res.json();
+            setTasks(tsks);
         }
     }
 

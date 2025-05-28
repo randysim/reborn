@@ -4,19 +4,6 @@ import { useState, useEffect } from 'react'
 import { API_URL } from '@/app/lib/constants'
 import { Check, Edit2, Trash2, Plus } from 'lucide-react'
 
-interface Book {
-    id: number
-    title: string
-    read: boolean
-    dateRead: string
-    createdAt: string
-}
-
-interface BookRequest {
-    id: number
-    title: string
-}
-
 export default function Books() {
     const [books, setBooks] = useState<Book[]>([])
     const [isLoading, setIsLoading] = useState(true)

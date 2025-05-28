@@ -6,7 +6,6 @@ import { Check, Edit2, Trash2, Plus } from 'lucide-react'
 
 export default function Goals() {
     const [goals, setGoals] = useState<Goal[]>([])
-    const [isLoading, setIsLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
     const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -17,7 +16,6 @@ export default function Goals() {
     })
 
     const fetchGoals = async () => {
-        setIsLoading(true)
         try {
             const res = await fetch(`${API_URL}/api/goals`, {
                 credentials: 'include'
@@ -28,8 +26,6 @@ export default function Goals() {
             }
         } catch (error) {
             console.error('Error fetching goals:', error)
-        } finally {
-            setIsLoading(false)
         }
     }
 
